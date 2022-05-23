@@ -1,6 +1,7 @@
 // const express = require('express')
 import express from "express"; // import로 가져옴
 import mysql from "mysql2/promise";
+import cors from "cors";
 
 const pool = mysql.createPool({
   host: "localhost",
@@ -18,7 +19,14 @@ const port = 3000 // 포트번호 알려줌
 //데이터 받을 준비
 app.use(express.json());
 
-/*생성*/
+const corsOptions = {
+  origin: "http://cdpn.io",
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors());
+
+/*생성
 app.post('/todos', async(req, res) => {
   const{reg_date, perform_date, is_completed, content} = req.body;
 
@@ -62,6 +70,7 @@ app.post('/todos', async(req, res) => {
 });
 
 app.listen(port);
+*/
 
 // app.listen(port, () => { // 실행
 //   console.log(`Example app listening on port ${port}`)
@@ -156,7 +165,7 @@ app.get('/todos/:id', async (req, res) => { //get요청, /로 요청이 들어�
 app.listen(port);
 */
 
-/*
+/* 전체조회 */
  // req : 받은 편지, res : 보낼 편지
 app.get('/todos', async (req, res) => { //get요청, /로 요청이 들어오면 함수 실행됨
   const[rows] = await pool.query(`SELECT * FROM TODO ORDER BY id`);
@@ -164,4 +173,3 @@ app.get('/todos', async (req, res) => { //get요청, /로 요청이 들어오면
   res.json(rows);
 });
 app.listen(port);
-*/
